@@ -2,6 +2,7 @@ package com.course.webfluxdemo.config;
 
 import com.course.webfluxdemo.dto.InputFailedValidationResponse;
 import com.course.webfluxdemo.exceptions.InputValidationException;
+import com.course.webfluxdemo.handlers.RequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

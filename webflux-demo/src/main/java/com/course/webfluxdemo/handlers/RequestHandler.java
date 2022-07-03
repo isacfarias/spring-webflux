@@ -1,4 +1,4 @@
-package com.course.webfluxdemo.config;
+package com.course.webfluxdemo.handlers;
 
 
 import com.course.webfluxdemo.dto.MultiplyRequestDto;
