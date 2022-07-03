@@ -17,7 +17,7 @@ public class ExceptionValidationHandler {
                         .builder()
                         .message(ex.getMessage())
                         .input(ex.getInput())
-                        .errorCode(ex.getInput())
+                        .errorCode(ex.getErrorCode())
                         .build());
 
     }

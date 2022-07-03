@@ -3,6 +3,7 @@ package com.course.webfluxdemo.config;
 
 import com.course.webfluxdemo.dto.MultiplyRequestDto;
 import com.course.webfluxdemo.dto.Response;
+import com.course.webfluxdemo.exceptions.InputValidationException;
 import com.course.webfluxdemo.services.ReactiveMathService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -17,7 +18,6 @@ public class RequestHandler {
 
     private final ReactiveMathService service;
 
-
     public Mono<ServerResponse> squareHandler(ServerRequest request) {
         final var input = Integer.parseInt(request.pathVariable("input"));
         final var response = this.service.findSquare(input);
@@ -29,7 +29,6 @@ public class RequestHandler {
         final var response = this.service.multiplicationTable(input);
         return ServerResponse.ok().body(response, Response.class);
     }
-
 
     public Mono<ServerResponse> tableStreamHandler(ServerRequest request) {
         final var input = Integer.parseInt(request.pathVariable("input"));
@@ -44,6 +43,15 @@ public class RequestHandler {
         final var response = this.service.multiply(requestDtoMono);
         return ServerResponse.ok()
                 .body(response, Response.class);
+    }
+
+    public Mono<ServerResponse> squareHandlerWithValidation(ServerRequest request) {
+        final var input = Integer.parseInt(request.pathVariable("input"));
+        if (input < 10 || input > 20) {
+            return Mono.error( new InputValidationException(input));
+        }
+        final var response = this.service.findSquare(input);
+        return ServerResponse.ok().body(response, Response.class);
     }
 
 }
