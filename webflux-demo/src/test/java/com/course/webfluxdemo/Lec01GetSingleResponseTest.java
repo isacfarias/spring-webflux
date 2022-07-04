@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.test.StepVerifier;
 
 @Slf4j
 class Lec01GetSingleResponseTest extends BaseTest {
@@ -14,7 +15,7 @@ class Lec01GetSingleResponseTest extends BaseTest {
 
     @Test
     void blockTest() {
-        var response = this.webClient
+        final var response = this.webClient
                 .get()
                 .uri("reactive-math/square/{input}", 5)
                 .retrieve()
@@ -25,5 +26,19 @@ class Lec01GetSingleResponseTest extends BaseTest {
         log.info(response.toString());
     }
 
+    @Test
+    void stepVerifierTest() {
+       final var response = this.webClient
+                .get()
+                .uri("reactive-math/square/{input}", 5)
+                .retrieve()
+                .bodyToMono(Response.class)
+                ;
+
+        StepVerifier.create(response)
+                .expectNextMatches(payload -> payload.getOutput() == 25)
+                .expectComplete();
+
+    }
 
 }
