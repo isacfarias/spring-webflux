@@ -18,7 +18,7 @@ class Lec05BadRequestTest extends BaseTest {
     void badRequest() {
         final var response = this.webClient
                 .get()
-                .uri("reactive-math/square/{input}throw", 5)
+                .uri("reactive-math/square/{input}/throw", 5)
                 .retrieve()
                 .bodyToMono(Response.class)
                 .doOnNext(msg -> log.info(msg.toString()))
