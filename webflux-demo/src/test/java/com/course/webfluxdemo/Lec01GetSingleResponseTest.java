@@ -20,6 +20,7 @@ class Lec01GetSingleResponseTest extends BaseTest {
                 .uri("reactive-math/square/{input}", 5)
                 .retrieve()
                 .bodyToMono(Response.class)
+                .doOnNext(msg -> log.info(msg.toString()))
                 .block();
 
         assert response != null;

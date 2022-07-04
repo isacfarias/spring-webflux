@@ -23,7 +23,7 @@ class Lec04PostHeadersRequestTest extends BaseTest {
                 .headers(header -> header.set("someKey", "someVal"))
                 .retrieve()
                 .bodyToMono(Response.class)
-                .doOnNext(System.out::println);
+                .doOnNext(msg -> log.info(msg.toString()));
 
         StepVerifier.create(response)
                 .expectNextCount(1)

@@ -22,7 +22,7 @@ class Lec03PostRequestTest extends BaseTest {
                 .bodyValue(buildRequestDto(2, 5))
                 .retrieve()
                 .bodyToMono(Response.class)
-                .doOnNext(System.out::println);
+                .doOnNext(msg -> log.info(msg.toString()));
 
         StepVerifier.create(response)
                 .expectNextCount(1)

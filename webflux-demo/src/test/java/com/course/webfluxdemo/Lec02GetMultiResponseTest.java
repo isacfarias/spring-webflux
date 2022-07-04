@@ -20,7 +20,7 @@ class Lec02GetMultiResponseTest extends BaseTest {
                 .uri("reactive-math/table/{input}", 5)
                 .retrieve()
                 .bodyToFlux(Response.class)
-                .doOnNext(System.out::println)
+                .doOnNext(msg -> log.info(msg.toString()))
                 ;
 
         StepVerifier.create(response)
