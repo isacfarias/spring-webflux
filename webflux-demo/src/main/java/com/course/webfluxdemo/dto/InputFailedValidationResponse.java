@@ -1,14 +1,13 @@
 package com.course.webfluxdemo.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
-import lombok.With;
+import lombok.*;
 
 @Data
 @Builder
 @With
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class InputFailedValidationResponse {
 
     private int errorCode;
