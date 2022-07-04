@@ -4,11 +4,15 @@ import com.course.webfluxdemo.dto.MultiplyRequestDto;
 import com.course.webfluxdemo.dto.Response;
 import com.course.webfluxdemo.services.ReactiveMathService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+
+@Slf4j
 @RestController
 @RequestMapping("reactive-math")
 @RequiredArgsConstructor
@@ -32,7 +36,8 @@ public class ReactiveMathController {
     }
 
     @PostMapping("multiply")
-    public Mono<Response> multiply(@RequestBody Mono<MultiplyRequestDto> dto) {
+    public Mono<Response> multiply(@RequestBody Mono<MultiplyRequestDto> dto, @RequestHeader Map<String, String> headers) {
+        log.info(headers.toString());
         return this.service.multiply(dto);
     }
 
