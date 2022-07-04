@@ -29,4 +29,20 @@ class Lec02GetMultiResponseTest extends BaseTest {
 
     }
 
+    @Test
+    void fluxStreamTest() {
+        final var response = this.webClient
+                .get()
+                .uri("reactive-math/table/{input}/stream", 5)
+                .retrieve()
+                .bodyToFlux(Response.class)
+                .doOnNext(System.out::println)
+                ;
+
+        StepVerifier.create(response)
+                .expectNextCount(10)
+                .verifyComplete();
+
+    }
+
 }
