@@ -21,10 +21,27 @@ public class WebClientConfig {
     private Mono<ClientResponse> sessionToken(ClientRequest request, ExchangeFunction exchangeFunction) {
         log.info("generating session token");
 
-        final var clientRequest = ClientRequest.from(request)
-                .headers(header -> header.setBearerAuth("some-length-jwt"))
-                .build();
+        final var clientRequest = request.attribute("auth")
+                .map(value -> value.equals("basic")
+                        ? withBasicAuth(request)
+                        : withOAuth(request)
+                )
+                .orElse(request);
 
         return exchangeFunction.exchange(clientRequest);
     }
+
+    private ClientRequest withBasicAuth(ClientRequest request) {
+        return ClientRequest.from(request)
+                .headers(httpHeaders -> httpHeaders.setBasicAuth("username", "password"))
+                .build();
+    }
+
+    private ClientRequest withOAuth(ClientRequest request) {
+        return ClientRequest.from(request)
+                .headers(httpHeaders -> httpHeaders.setBearerAuth("some-length-jwt"))
+                .build();
+    }
+
+
 }
