@@ -30,6 +30,22 @@ class Lec04PostHeadersRequestTest extends BaseTest {
                 .verifyComplete();
     }
 
+    @Test
+    void postOauth() {
+        final var response = this.webClient
+                .post()
+                .uri("reactive-math/multiply")
+                .bodyValue(buildRequestDto(2, 5))
+                .headers(header -> header.setBasicAuth("username", "password"))
+                .retrieve()
+                .bodyToMono(Response.class)
+                .doOnNext(msg -> log.info(msg.toString()));
+
+        StepVerifier.create(response)
+                .expectNextCount(1)
+                .verifyComplete();
+    }
+
     private MultiplyRequestDto buildRequestDto(int firstNumber, int secondNumber) {
         MultiplyRequestDto dto = new MultiplyRequestDto();
         dto.setFirst(firstNumber);
