@@ -16,7 +16,7 @@ public class ProductController {
 
     private final ProductService service;
 
-    @GetMapping("all")
+    @GetMapping
     public Flux<ProductDto> all() {
         return this.service.getAll();
     }
@@ -28,7 +28,7 @@ public class ProductController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("{id}")
+    @PostMapping
     public Mono<ResponseEntity<ProductDto>> insert(@RequestBody Mono<ProductDto> productDto) {
         return this.service.save(productDto)
                 .map(ResponseEntity::ok)
@@ -48,5 +48,10 @@ public class ProductController {
         return this.service.deleteProduct(id);
     }
 
+    @GetMapping("price-range")
+    public Flux<ProductDto> priceRange(@RequestParam("min") int min,
+                                                       @RequestParam("max") int max) {
+        return this.service.getPriceRange(min, max);
+    }
 
 }

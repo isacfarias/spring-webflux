@@ -4,9 +4,12 @@ import com.course.productservice.dto.ProductDto;
 import com.course.productservice.repository.ProductRepository;
 import com.course.productservice.util.EntityDtoUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Range;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,4 +48,8 @@ public class ProductService {
     }
 
 
+    public Flux<ProductDto> getPriceRange(int min, int max) {
+        return this.repository.findByPriceBetween(Range.closed(min, max))
+                .map(EntityDtoUtil::toDto);
+    }
 }
