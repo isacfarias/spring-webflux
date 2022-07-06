@@ -1,9 +1,7 @@
 package com.course.productservice.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-import lombok.With;
 import org.springframework.data.annotation.Id;
 
 @Data

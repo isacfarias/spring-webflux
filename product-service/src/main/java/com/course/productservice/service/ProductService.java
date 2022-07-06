@@ -1,7 +1,6 @@
 package com.course.productservice.service;
 
 import com.course.productservice.dto.ProductDto;
-import com.course.productservice.entity.Product;
 import com.course.productservice.repository.ProductRepository;
 import com.course.productservice.util.EntityDtoUtil;
 import lombok.RequiredArgsConstructor;
