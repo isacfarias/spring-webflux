@@ -13,9 +13,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class UserController {
 
-
     private final UserService service;
-
 
     @GetMapping
     public Flux<UserDto> all() {
@@ -36,14 +34,14 @@ public class UserController {
 
 
     @PutMapping("{id}")
-    public Mono<ResponseEntity<UserDto>> update(@PathVariable Integer userId, @RequestBody Mono<UserDto> dto) {
+    public Mono<ResponseEntity<UserDto>> update(@PathVariable("id") Integer userId, @RequestBody Mono<UserDto> dto) {
         return this.service.update(userId, dto)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("{id}")
-    public Mono<Void> delete(@PathVariable Integer userId) {
+    public Mono<Void> delete(@PathVariable("id") Integer userId) {
         return this.service.deleteUser(userId);
     }
 
