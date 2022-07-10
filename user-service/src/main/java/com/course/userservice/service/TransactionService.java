@@ -9,6 +9,7 @@ import com.course.userservice.repository.UserTransactionRepository;
 import com.course.userservice.util.EntityDtoUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -18,7 +19,7 @@ public class TransactionService {
     private final UserRepository userRepository;
     private final UserTransactionRepository transactionRepository;
 
-    public Mono<TransactionResponseDto> createTrasaction(final TransactionRequestDto requestDto) {
+    public Mono<TransactionResponseDto> createTransaction(final TransactionRequestDto requestDto) {
         return this.userRepository
                 .updateUserBalance(requestDto.getUserId(), requestDto.getAmount())
                 .filter(Boolean::booleanValue)
@@ -27,6 +28,11 @@ public class TransactionService {
                 .map(userTransaction -> EntityDtoUtil.toDto(requestDto, TransactionStatus.APPROVED))
                 .defaultIfEmpty(EntityDtoUtil.toDto(requestDto, TransactionStatus.DECLINED));
     }
+
+    public Flux<UserTransaction> getUserId(int userId) {
+        return this.transactionRepository.findByUserId(userId);
+    }
+
 
 
 
