@@ -1,6 +1,6 @@
 package com.course.orderservice.dto;
 
-import com.course.userservice.enuns.TransactionStatus;
+import com.course.orderservice.enums.TransactionStatus;
 import lombok.Data;
 import lombok.ToString;
 

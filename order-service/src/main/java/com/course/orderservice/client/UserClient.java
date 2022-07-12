@@ -20,7 +20,6 @@ public class UserClient {
                 .build();
     }
 
-
     public Mono<TransactionResponseDto> authorizeTransaction(TransactionRequestDto requestDto) {
         return this.webClient
                 .post()
@@ -29,6 +28,5 @@ public class UserClient {
                 .retrieve()
                 .bodyToMono(TransactionResponseDto.class);
     }
-
 
 }
