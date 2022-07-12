@@ -13,7 +13,7 @@ public class ProductClient {
 
     private final WebClient webClient;
 
-    public ProductClient(@Value("${http://localhost:8091/product/}") String url) {
+    public ProductClient(@Value("${product.service.url}") String url) {
         this.webClient = WebClient
                 .builder()
                 .baseUrl(url)
