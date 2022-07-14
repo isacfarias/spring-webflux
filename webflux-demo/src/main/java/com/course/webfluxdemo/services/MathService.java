@@ -5,6 +5,7 @@ import com.course.webfluxdemo.util.SleepUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service
@@ -19,7 +20,7 @@ public class MathService {
                .peek(i -> SleepUtil.sleepSeconds(1))
                .peek(i -> System.out.println("math-service processing:".concat(i+"")))
                .mapToObj(i -> new Response(i * input))
-               .toList();
+               .collect(Collectors.toList());
 
     }
 }
