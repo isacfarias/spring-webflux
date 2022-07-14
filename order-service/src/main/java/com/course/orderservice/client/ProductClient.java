@@ -2,13 +2,13 @@ package com.course.orderservice.client;
 
 import com.course.orderservice.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class ProductClient {
 
     private final WebClient webClient;
@@ -23,7 +23,7 @@ public class ProductClient {
     public Mono<ProductDto> getProductById(final String productId) {
         return this.webClient
                 .get()
-                .uri("{id}")
+                .uri("{id}", productId)
                 .retrieve()
                 .bodyToMono(ProductDto.class);
     }
