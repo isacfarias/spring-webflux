@@ -35,26 +35,25 @@
 <script>
     const observeProducts = () => {
         const price = document.getElementById('max-price').value;
-        const tableBody = document.getElementById('table-body').value;
-
+        const tableBody = document.getElementById('table-body');
         var source = new EventSource("/product/stream/"+price);
+
         source.onmessage = (event) => {
             let product = JSON.parse(event.data);
             let columns = `
                 <th scope="row">${product.id}</th>
                 <td>${product.description}</td>
                 <td>${product.price}</td>
-                `;
+            `;
 
-            let row = document.getElementById('tr');
+            let row = document.createElement('tr');
             row.innerHTML = columns;
 
             tableBody.appendChild(row);
         };
-
-        document.getElementById('notify').addEventListener('click', observeProducts);
-
     }
+
+    document.getElementById('notify').addEventListener('click', observeProducts);
 
 
 </script>
