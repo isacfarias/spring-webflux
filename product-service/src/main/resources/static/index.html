@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Stream</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="col">
+            <input id="max-price" type="text" class="form-control" placeholder="Max price">
+        </div>
+        <div class="col">
+            <button id="notify" type="button" class="btn btn-secondary form-control font-weignt-bold">Notify me!!</button>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const observeProducts = () => {
+        const price = document.getElementById('max-price').value;
+        const tableBody = document.getElementById('table-body').value;
+
+        var source = new EventSource("/product/stream/"+price);
+        source.onmessage = (event) => {
+            let product = JSON.parse(event.data);
+            let columns = `
+                <th scope="row">${product.id}</th>
+                <td>${product.description}</td>
+                <td>${product.price}</td>
+                `;
+
+            let row = document.getElementById('tr');
+            row.innerHTML = columns;
+
+            tableBody.appendChild(row);
+        };
+
+        document.getElementById('notify').addEventListener('click', observeProducts);
+
+    }
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+</body>
+</html>
