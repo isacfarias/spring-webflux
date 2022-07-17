@@ -1,14 +1,10 @@
-package com.course.webfluxdemo;
+package com.course.webfluxdemo.webclient;
 
-import com.course.webfluxdemo.dto.InputFailedValidationResponse;
-import com.course.webfluxdemo.dto.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Map;

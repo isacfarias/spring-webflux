@@ -1,4 +1,4 @@
-package com.course.webfluxdemo;
+package com.course.webfluxdemo.webclient;
 
 import com.course.webfluxdemo.dto.MultiplyRequestDto;
 import com.course.webfluxdemo.dto.Response;
@@ -9,34 +9,17 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.test.StepVerifier;
 
 @Slf4j
-class Lec08AtributesRequestTest extends BaseTest {
+class Lec03PostRequestTest extends BaseTest {
 
     @Autowired
     private WebClient webClient;
 
     @Test
-    void postBasicAuth() {
+    void post() {
         final var response = this.webClient
                 .post()
                 .uri("reactive-math/multiply")
                 .bodyValue(buildRequestDto(2, 5))
-                .attribute("auth", "basic")
-                .retrieve()
-                .bodyToMono(Response.class)
-                .doOnNext(msg -> log.info(msg.toString()));
-
-        StepVerifier.create(response)
-                .expectNextCount(1)
-                .verifyComplete();
-    }
-
-    @Test
-    void postOauth() {
-        final var response = this.webClient
-                .post()
-                .uri("reactive-math/multiply")
-                .bodyValue(buildRequestDto(2, 5))
-                .attribute("auth", "oauth")
                 .retrieve()
                 .bodyToMono(Response.class)
                 .doOnNext(msg -> log.info(msg.toString()));
