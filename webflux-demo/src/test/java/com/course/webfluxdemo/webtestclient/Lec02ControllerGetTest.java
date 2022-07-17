@@ -1,5 +1,6 @@
 package com.course.webfluxdemo.webtestclient;
 
+import com.course.webfluxdemo.controller.ParamsController;
 import com.course.webfluxdemo.controller.ReactiveMathController;
 import com.course.webfluxdemo.dto.Response;
 import com.course.webfluxdemo.services.ReactiveMathService;
@@ -17,8 +18,9 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 
-@WebFluxTest(ReactiveMathController.class)
+@WebFluxTest( controllers = {ReactiveMathController.class, ParamsController.class})
 public class Lec02ControllerGetTest {
 
     @Autowired
@@ -107,6 +109,27 @@ public class Lec02ControllerGetTest {
                 .expectHeader().contentTypeCompatibleWith(MediaType.TEXT_EVENT_STREAM)
                 .expectBodyList(Response.class)
                 .hasSize(3);
+    }
+
+
+    @Test
+    void searchShould_Return_List_WhenSucessfull() {
+        final var map = Map.of(
+                "count", 10,
+                "page", 20
+        );
+
+        this.client
+                .get()
+                .uri(uriBuilder -> uriBuilder.path("/jobs/search")
+                        .query("count={count}&page={page}")
+                        .build(map)
+                )
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBodyList(Integer.class)
+                .hasSize(2).contains(10, 20);
     }
 
 }
