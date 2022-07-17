@@ -40,8 +40,7 @@ public class Lec03ControllerPostTest {
                 })
                 .bodyValue(new MultiplyRequestDto())
                 .exchange()
-                .expectStatus().is2xxSuccessful()
-        ;
+                .expectStatus().is2xxSuccessful();
 
     }
 
