@@ -1,4 +1,4 @@
-package com.course.webfluxdemo;
+package com.course.webfluxdemo.webclient;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
