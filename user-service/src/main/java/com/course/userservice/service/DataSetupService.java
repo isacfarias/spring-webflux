@@ -18,7 +18,7 @@ import java.util.Optional;
 
 
 @Slf4j
-@Service
+//@Service
 @RequiredArgsConstructor
 public class DataSetupService implements CommandLineRunner {
 
